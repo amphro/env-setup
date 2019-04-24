@@ -1,0 +1,11 @@
+{
+  "terminal.integrated.shell.osx": "zsh",
+  "terminal.integrated.shellArgs.osx": [],
+  "workbench.colorTheme": "Solarized Dark",
+  "editor.tabSize": 2,
+  "terminal.external.osxExec": "iTerm.app",
+  "terminal.integrated.fontFamily": "Droid Sans Mono Slashed for Powerline",
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
