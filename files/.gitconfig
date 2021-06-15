@@ -1,0 +1,14 @@
+# This is Git's per-user configuration file.
+[user]
+# Please adapt and uncomment the following lines:
+        name = Thomas Dvornik
+        email = amphro@gmail.com
+[commit]
+        gpgsign = true
+[push]
+        gpgsign = if-asked
+[gpg]
+        program = gpg
+[alias]
+        co-pr = "!f() { git fetch -fu origin refs/pull/$1/head:pr-$1; git checkout pr-$1; } ; f"
+        prune-pr = "!git for-each-ref refs/heads/pr-* --format='%(refname:short)' | while read ref ; do git branch -D $ref ; done"

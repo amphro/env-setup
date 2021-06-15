@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# SYSTEM SETUP
+./setup/brew.sh
+
 # TERMINAL SETUP
 # Install zsh first to make sure we have a zsh file
 ./setup/zsh.sh
