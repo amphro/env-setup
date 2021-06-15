@@ -6,7 +6,7 @@ source ./utils.sh
 if which fzf; then
   statusmsg Setup "fuzzy is already installed"
 else
-  statusmsg Setup 'Intalling fuzzy search'
+  statusmsg Setup 'Installing fuzzy search'
 
   brew install fzf
 

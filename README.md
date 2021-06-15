@@ -18,6 +18,6 @@ If you want to only run a specific customization, you can run that setup specifi
 ./setup/env.sh
 ```
 
-After running setup, open iterm2, select "Prefrences...", select the "Amphro" profile, select "Other Actions..." and "Set as Default."
+After running setup, open iterm2, select "Preferences...", select the "Amphro" profile, select "Other Actions..." and "Set as Default."
 
 Import GPG keys from the previous machine using [these steps](https://gist.github.com/angela-d/8b27670bac26e4bf7c431715fef5cc51).
