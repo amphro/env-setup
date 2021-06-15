@@ -27,9 +27,11 @@ if ! grep -q "$ADDED_ZSH_COMMENT" "$RC_FILE"; then
   echo '' >> "$RC_FILE"
   echo 'export GPG_TTY=$(tty)' >> "$RC_FILE"
   echo '' >> "$RC_FILE"
-  echo '# Extracted from nvm install as of 6/2/2020 - it may need to be updated at some point in the future' >> "$RC_FILE"
-  echo 'export NVM_DIR="$HOME/.nvm"' >> "$RC_FILE"
-  echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' >> "$RC_FILE"
-  echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' >> "$RC_FILE"
+  if ! grep -q "NVM_DIR" "$RC_FILE"; then
+    echo '# Extracted from nvm install as of 6/2/2020 - it may need to be updated at some point in the future' >> "$RC_FILE"
+    echo 'export NVM_DIR="$HOME/.nvm"' >> "$RC_FILE"
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' >> "$RC_FILE"
+    echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' >> "$RC_FILE"
+  fi
   echo "# --------------------------------------------------------" >> "$RC_FILE"
 fi
