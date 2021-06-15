@@ -27,16 +27,3 @@ fi
 
 statusmsg Setup "setting theme"
 sed -i -E s/^ZSH_THEME=\"[a-zA-Z_-]+\"/ZSH_THEME=\"agnoster\"/g "$RC_FILE"
-
-ADDED_ZSH_COMMENT="# Added by https://github.com/amphro/env-setup"
-if ! grep -q "$ADDED_ZSH_COMMENT" "$RC_FILE"; then
-  statusmsg Setup "adding custom prompt"
-  echo "$ADDED_ZSH_COMMENT" >> "$RC_FILE"
-  echo "DEFAULT_USER=$USER" >> "$RC_FILE"
-  echo 'prompt_time() {' >> "$RC_FILE"
-  echo '  prompt_segment "green" "black" " $(date +%H:%M:%S) "' >> "$RC_FILE"
-  echo '}' >> "$RC_FILE"
-  echo 'PROMPT_SEGMENT_POSITION=2 PROMPT_SEGMENT_NAME="prompt_time"' >> "$RC_FILE"
-  echo 'AGNOSTER_PROMPT_SEGMENTS=("${AGNOSTER_PROMPT_SEGMENTS[@]:0:$PROMPT_SEGMENT_POSITION-1}" "$PROMPT_SEGMENT_NAME" "${AGNOSTER_PROMPT_SEGMENTS[@]:$PROMPT_SEGMENT_POSITION-1}")' >> "$RC_FILE"
-  echo 'unset PROMPT_SEGMENT_POSITION PROMPT_SEGMENT_NAME' >> "$RC_FILE"
-fi
