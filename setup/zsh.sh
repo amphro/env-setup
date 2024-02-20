@@ -26,4 +26,4 @@ if [ ! -f "$ZSH/custom/themes/agnoster.zsh-theme" ]; then
 fi
 
 statusmsg Setup "setting theme"
-sed -i -E s/^ZSH_THEME=\"[a-zA-Z_-]+\"/ZSH_THEME=\"agnoster\"/g "$RC_FILE"
+sed -i '' -E 's/^ZSH_THEME=\"[a-zA-Z_-]+\"/ZSH_THEME=\"agnoster\"/g' "$RC_FILE"

@@ -8,7 +8,7 @@ ITERM_PROTILE_FILE="$ITERM_PROFILE_DIR/profiles.json"
 
 copyitermprofiles () {
   cp ./files/profiles.json "$ITERM_PROTILE_FILE"
-  sed -i -E s#/Users/amphro#/Users/$USER#g "$ITERM_PROTILE_FILE"
+  sed -i '' -E s#/Users/amphro#/Users/$USER#g "$ITERM_PROTILE_FILE"
  # "Working Directory": "/Users/$USER",
 }
 
