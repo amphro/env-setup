@@ -9,7 +9,9 @@ else
   statusmsg Setup 'Installing fuzzy search'
 
   brew install fzf
+fi
 
-  # To install useful key bindings and fuzzy completion:
-  $(brew --prefix)/opt/fzf/install
+if ! grep -qF 'source <(fzf --zsh)' "$RC_FILE" 2>/dev/null; then
+  statusmsg Setup "adding fzf shell integration to $RC_FILE"
+  echo 'source <(fzf --zsh)' >> "$RC_FILE"
 fi
