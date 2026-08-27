@@ -3,27 +3,43 @@
 # Assuming running from root dir
 source ./utils.sh
 
-if [ -f "$RC_FILE" ]; then
-  statusmsg Setup "ohhmyzsh is already installed"
+# oh-my-zsh only exports $ZSH once it's sourced into an interactive shell,
+# which hasn't happened yet on a fresh machine, so set it ourselves.
+export ZSH="$HOME/.oh-my-zsh"
+
+if [ -d "$ZSH" ]; then
+  statusmsg Setup "oh-my-zsh is already installed"
 else
-  statusmsg Setup "installing zsh"
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  statusmsg Setup "installing oh-my-zsh"
+  # KEEP_ZSHRC=yes: we wire $RC_FILE up ourselves below, since the installer's
+  # zshrc handling is unreliable when run non-interactively from this script.
+  RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
-if [ ! -f "$HOME/Library/Fonts/Droid Sans Mono Slashed for Powerline.ttf" ]; then
-  statusmsg Setup "installing fonts"
-  git clone https://github.com/powerline/fonts.git --depth=1
-  cd fonts
-  ./install.sh
-  cd ..
-  # clean up the fonts
-  rm -rf fonts
+if ! brew list --cask font-hack-nerd-font >/dev/null 2>&1; then
+  statusmsg Setup "installing Nerd Font"
+  brew install --cask font-hack-nerd-font
 fi
 
-if [ ! -f "$ZSH/custom/themes/agnoster.zsh-theme" ]; then
-  statusmsg Setup "downloading theme"
-  curl https://raw.githubusercontent.com/agnoster/agnoster-zsh-theme/master/agnoster.zsh-theme > $ZSH/custom/themes/agnoster.zsh-theme
+# agnoster ships as a built-in oh-my-zsh theme, no separate download needed
+
+if ! grep -qF 'source $ZSH/oh-my-zsh.sh' "$RC_FILE" 2>/dev/null; then
+  statusmsg Setup "wiring oh-my-zsh into $RC_FILE"
+  TMP_FILE="$(mktemp)"
+  {
+    echo "export ZSH=\"$ZSH\""
+    echo 'ZSH_THEME="agnoster"'
+    echo 'plugins=(git)'
+    echo 'source $ZSH/oh-my-zsh.sh'
+    echo ''
+    cat "$RC_FILE" 2>/dev/null
+  } > "$TMP_FILE"
+  mv "$TMP_FILE" "$RC_FILE"
 fi
 
 statusmsg Setup "setting theme"
-sed -i '' -E 's/^ZSH_THEME=\"[a-zA-Z_-]+\"/ZSH_THEME=\"agnoster\"/g' "$RC_FILE"
+if grep -q '^ZSH_THEME=' "$RC_FILE"; then
+  sed -i '' -E 's/^ZSH_THEME="[a-zA-Z_-]+"/ZSH_THEME="agnoster"/g' "$RC_FILE"
+else
+  echo 'ZSH_THEME="agnoster"' >> "$RC_FILE"
+fi
